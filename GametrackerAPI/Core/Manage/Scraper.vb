@@ -46,7 +46,7 @@
                 Next
 
                 For Each Game As HtmlElement In GameSelect.Children
-                    If Game.TagName = "option" Then Games.Add(Game.GetAttribute("value"), Game.InnerText)
+                    If Game.TagName.ToLower = "option" Then Games.Add(Game.GetAttribute("value"), Game.InnerText)
                 Next
 
                 For Each Location As HtmlElement In LocationSelect.Children
@@ -67,10 +67,11 @@
             End Try
         End Function
 
-        Public Function MakeSearch(ByVal GameName As String, Optional ByVal LocationID As String = "") As String
+        Public Function MakeSearch(ByVal GameName As String, Optional ByVal LocationID As String = "", Optional ByVal PageNumber As Integer = 1) As String
             Dim Result As String = BaseURL & "search/" & GameName & "/"
             If Not LocationID = "" Then Result += LocationID & "/"
             If Result.EndsWith("/") Then Result += "?"
+            Result += "searchpge=" & PageNumber
             Return Result
         End Function
 
@@ -168,12 +169,12 @@
                 Server.Players_Current = Players.FirstOrDefault
                 Server.Players_Maximum = Players.LastOrDefault
 
-                Dim IPandPort As String() = ElementParent.Children(5).InnerText.Split(":")
+                Dim IPandPort As String() = ElementParent.Children(6).InnerText.Split(":")
 
                 Server.IP = IPandPort.FirstOrDefault
                 Server.Port = IPandPort.LastOrDefault
 
-                Server.Map = ElementParent.Children(6).InnerText
+                Server.Map = ElementParent.Children(7).InnerText
 
                 Dim DetailsUrl As String = ElementParent.Children(2).Children(0).GetAttribute("href").Replace("about:/", "")
 

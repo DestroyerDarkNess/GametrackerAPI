@@ -1,0 +1,14 @@
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.TestApp.exe.config
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.TestApp.exe
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.TestApp.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.TestApp.xml
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.dll
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\bin\Debug\GametrackerAPI.xml
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.Form1.resources
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.Resources.resources
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.vbproj.GenerateResource.Cache
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.exe
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.xml
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI.TestApp\obj\Debug\GametrackerAPI.TestApp.vbprojResolveAssemblyReference.cache
