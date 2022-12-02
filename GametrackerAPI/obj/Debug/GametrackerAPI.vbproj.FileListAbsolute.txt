@@ -1,0 +1,10 @@
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.pdb
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.xml
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.vbprojResolveAssemblyReference.cache
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.Resources.resources
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.vbproj.GenerateResource.Cache
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.xml
+c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.dll.config
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.dll
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.dll

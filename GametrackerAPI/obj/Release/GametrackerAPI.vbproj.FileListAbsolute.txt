@@ -1,0 +1,9 @@
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Release\GametrackerAPI.dll.config
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Release\GametrackerAPI.dll
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Release\GametrackerAPI.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Release\GametrackerAPI.xml
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.Resources.resources
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.vbproj.GenerateResource.Cache
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.dll
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.xml
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.pdb
