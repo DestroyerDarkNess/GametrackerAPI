@@ -7,3 +7,4 @@ C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerA
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.dll
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.xml
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.pdb
+C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Release\GametrackerAPI.vbprojResolveAssemblyReference.cache

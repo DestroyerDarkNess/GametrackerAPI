@@ -6,7 +6,6 @@ Namespace Core.WebKit
     Public Class IE_Hook
         Implements IDisposable
 
-        Public WithEvents WebRender As ExtendedWebBrowser = New ExtendedWebBrowser
         Public Property ErrInfo As String = String.Empty
 
         Public Sub New()
@@ -26,24 +25,6 @@ Namespace Core.WebKit
             Next
 
             Return HtmlEditor.Document
-        End Function
-
-        Public Async Function GetHTML(ByVal TargetUrl As String, Optional DelayMilliseconds As Integer = 10000, Optional ByVal UsertAgent As String = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)") As Task(Of String)
-            Dim Result As String = String.Empty
-            WebRender.Navigate(TargetUrl, Nothing, Nothing, "User-Agent: " & UsertAgent)
-
-            AddHandler WebRender.DocumentCompleted, Sub()
-                                                        Result = WebRender.Document.Body.InnerHtml
-                                                    End Sub
-
-            For i As Integer = 0 To DelayMilliseconds
-                If Not Result = String.Empty Then
-                    Exit For
-                End If
-                System.Threading.Thread.Sleep(1)
-            Next
-
-            Return Result
         End Function
 
         Public Function HTMLExternalDownload(ByVal TargetUrl As String, Optional ByVal UsertAgent As String = "Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Trident/6.0)") As String
@@ -112,7 +93,6 @@ Namespace Core.WebKit
         Protected Overridable Sub Dispose(disposing As Boolean)
             If Not disposedValue Then
                 If disposing Then
-                    WebRender.Dispose()
                     ' TODO: dispose managed state (managed objects).
                 End If
 

@@ -77,10 +77,7 @@
     <Compile Include="Core\Controllers\Player.vb" />
     <Compile Include="Core\Controllers\Server.vb" />
     <Compile Include="Core\Manage\Scraper.vb" />
-    <Compile Include="Core\Utils.vb" />
-    <Compile Include="Core\WebKit\ExtendedWebBrowser.vb">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Core\Extensions.vb" />
     <Compile Include="Core\WebKit\IE_Hook.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

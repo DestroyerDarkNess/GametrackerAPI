@@ -1,7 +1,7 @@
 ﻿Imports System.IO
 Imports System.Runtime.CompilerServices
 
-Friend Module Utils
+Friend Module Extensions
     <Extension()>
     Friend Function getElementsByTagAndClassName(ByVal doc As HtmlDocument, ByVal Optional tag As String = "", ByVal Optional className As String = "") As List(Of HtmlElement)
         Dim lst As List(Of HtmlElement) = New List(Of HtmlElement)()

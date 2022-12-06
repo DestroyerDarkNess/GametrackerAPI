@@ -33,46 +33,7 @@
 
             Dim FindTable As HtmlElement = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_stp").FirstOrDefault
 
-            Dim PagingElement As New List(Of HtmlElement)
-
-            For Each Element As HtmlElement In FindTable.All
-                If Element.TagName.ToLower = "tr" Then
-                    PagingElement.Add(Element)
-                End If
-            Next
-
-            Dim TableHeaderInfo As HtmlElement = Nothing
-            Dim TableInfo As New List(Of HtmlElement)
-
-            If Not PagingElement.Count = 0 Then
-
-                Dim MaxItems As Integer = PagingElement.Count - 1
-
-                For i As Integer = 0 To MaxItems
-
-                    Select Case i
-                        Case 0 : TableHeaderInfo = PagingElement(i)
-                        Case Else
-                            TableInfo.Add(PagingElement(i))
-                    End Select
-
-                Next
-
-            End If
-
-            Dim Result As New List(Of Core.Controllers.Player)
-
-            For Each ElementParent As HtmlElement In TableInfo
-                Dim Player As New Core.Controllers.Player
-                Player.Rank = Val(ElementParent.Children(0).InnerText)
-                Player.Name = ElementParent.Children(1).InnerText
-                Player.Score = ElementParent.Children(2).InnerText
-                Player.Time_Played = ElementParent.Children(3).InnerText
-
-                Result.Add(Player)
-            Next
-
-            Return Result
+            Return Await GetPlayersFromTable(FindTable)
         End Function
 
         Public Async Function Get_TenTOP_PLAYERS() As Task(Of List(Of Controllers.Player))
@@ -86,7 +47,6 @@
             Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
 
             If ParsedDocument Is Nothing Then
-                Debug.WriteLine("Vacio !")
                 Throw New Exception("Error to Parsing.")
             End If
 
@@ -98,46 +58,7 @@
 
             Dim FindTable As HtmlElement = Tables.LastOrDefault
 
-            Dim PagingElement As New List(Of HtmlElement)
-
-            For Each Element As HtmlElement In FindTable.All
-                If Element.TagName.ToLower = "tr" Then
-                    PagingElement.Add(Element)
-                End If
-            Next
-
-            Dim TableHeaderInfo As HtmlElement = Nothing
-            Dim TableInfo As New List(Of HtmlElement)
-
-            If Not PagingElement.Count = 0 Then
-
-                Dim MaxItems As Integer = PagingElement.Count - 1
-
-                For i As Integer = 0 To MaxItems
-
-                    Select Case i
-                        Case 0 : TableHeaderInfo = PagingElement(i)
-                        Case Else
-                            TableInfo.Add(PagingElement(i))
-                    End Select
-
-                Next
-
-            End If
-
-            Dim Result As New List(Of Core.Controllers.Player)
-
-            For Each ElementParent As HtmlElement In TableInfo
-                Dim Player As New Core.Controllers.Player
-                Player.Rank = Val(ElementParent.Children(0).InnerText)
-                Player.Name = ElementParent.Children(1).InnerText
-                Player.Score = ElementParent.Children(2).InnerText
-                Player.Time_Played = ElementParent.Children(3).InnerText
-
-                Result.Add(Player)
-            Next
-
-            Return Result
+            Return Await GetPlayersFromTable(FindTable)
         End Function
 
         Public Async Function GetMapPreview_URL() As Task(Of String)
@@ -161,6 +82,48 @@
             Return Img_Url
         End Function
 
+        Private Async Function GetPlayersFromTable(ByVal Table As HtmlElement) As Task(Of List(Of Core.Controllers.Player))
+            Dim PagingElement As New List(Of HtmlElement)
+
+            For Each Element As HtmlElement In Table.All
+                If Element.TagName.ToLower = "tr" Then
+                    PagingElement.Add(Element)
+                End If
+            Next
+
+            Dim TableHeaderInfo As HtmlElement = Nothing
+            Dim TableInfo As New List(Of HtmlElement)
+
+            If Not PagingElement.Count = 0 Then
+
+                Dim MaxItems As Integer = PagingElement.Count - 1
+
+                For i As Integer = 0 To MaxItems
+
+                    Select Case i
+                        Case 0 : TableHeaderInfo = PagingElement(i)
+                        Case Else
+                            TableInfo.Add(PagingElement(i))
+                    End Select
+
+                Next
+
+            End If
+
+            Dim Result As New List(Of Core.Controllers.Player)
+
+            For Each ElementParent As HtmlElement In TableInfo
+                Dim Player As New Core.Controllers.Player
+                Player.Rank = Val(ElementParent.Children(0).InnerText)
+                Player.Name = ElementParent.Children(1).InnerText
+                Player.Score = ElementParent.Children(2).InnerText
+                Player.Time_Played = ElementParent.Children(3).InnerText
+
+                Result.Add(Player)
+            Next
+
+            Return Result
+        End Function
 
     End Class
 End Namespace
