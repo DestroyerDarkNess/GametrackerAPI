@@ -8,3 +8,13 @@ c:\users\admin\documents\visual studio 2015\Projects\GametrackerAPI\GametrackerA
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.dll.config
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\bin\Debug\GametrackerAPI.dll
 C:\Users\Admin\Documents\Visual Studio 2015\Projects\GametrackerAPI\GametrackerAPI\obj\Debug\GametrackerAPI.dll
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\bin\Debug\GametrackerAPI.dll.config
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\bin\Debug\GametrackerAPI.dll
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\bin\Debug\GametrackerAPI.pdb
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\bin\Debug\GametrackerAPI.xml
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.vbprojResolveAssemblyReference.cache
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.Resources.resources
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.vbproj.GenerateResource.Cache
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.dll
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.xml
+C:\Users\Indatech\Documents\Visual Studio 2015\Projects\GametrackerAPI-main\GametrackerAPI\obj\Debug\GametrackerAPI.pdb

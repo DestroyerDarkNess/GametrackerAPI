@@ -47,8 +47,17 @@
     <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EO.Base">
+      <HintPath>..\..\..\..\..\AppData\Local\Programs\Xylateware\EO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebBrowser">
+      <HintPath>..\..\..\..\..\AppData\Local\Programs\Xylateware\EO.WebBrowser.dll</HintPath>
+    </Reference>
+    <Reference Include="EO.WebEngine">
+      <HintPath>..\..\..\..\..\AppData\Local\Programs\Xylateware\EO.WebEngine.dll</HintPath>
+    </Reference>
     <Reference Include="GametrackerAPI">
-      <HintPath>..\GametrackerAPI\bin\Release\GametrackerAPI.dll</HintPath>
+      <HintPath>..\GametrackerAPI\bin\Debug\GametrackerAPI.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

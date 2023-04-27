@@ -16,60 +16,68 @@
             WebEngine = EngineInstance
         End Sub
 
-        Public Async Function Get_Online_PLAYERS() As Task(Of List(Of Controllers.Player))
+        Public Async Function Get_Online_PLAYERS(ByVal InfoUrl_HTML As String) As Task(Of List(Of Controllers.Player))
 
-            Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+            '   Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+            Try
+                If String.IsNullOrEmpty(InfoUrl_HTML) Then
+                    Throw New Exception("Empty HTML Code.")
+                End If
 
-            If String.IsNullOrEmpty(HtmlCode) Then
-                Throw New Exception("Empty HTML Code.")
-            End If
+                Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(InfoUrl_HTML)
 
-            Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+                If ParsedDocument Is Nothing Then
+                    Debug.WriteLine("Vacio !")
+                    Throw New Exception("Error to Parsing.")
+                End If
 
-            If ParsedDocument Is Nothing Then
-                Debug.WriteLine("Vacio !")
-                Throw New Exception("Error to Parsing.")
-            End If
+                Dim FindTable As HtmlElement = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_stp").FirstOrDefault
 
-            Dim FindTable As HtmlElement = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_stp").FirstOrDefault
-
-            Return Await GetPlayersFromTable(FindTable)
+                Return Await GetPlayersFromTable(FindTable)
+            Catch ex As Exception
+                Debug.WriteLine(ex.Message)
+                Return Nothing
+            End Try
         End Function
 
-        Public Async Function Get_TenTOP_PLAYERS() As Task(Of List(Of Controllers.Player))
+        Public Async Function Get_TenTOP_PLAYERS(ByVal InfoUrl_HTML As String) As Task(Of List(Of Controllers.Player))
 
-            Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+            '   Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+            Try
+                If String.IsNullOrEmpty(InfoUrl_HTML) Then
+                    Throw New Exception("Empty HTML Code.")
+                End If
 
-            If String.IsNullOrEmpty(HtmlCode) Then
-                Throw New Exception("Empty HTML Code.")
-            End If
+                Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(InfoUrl_HTML)
 
-            Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+                If ParsedDocument Is Nothing Then
+                    Throw New Exception("Error to Parsing.")
+                End If
 
-            If ParsedDocument Is Nothing Then
-                Throw New Exception("Error to Parsing.")
-            End If
+                Dim Tables As List(Of HtmlElement) = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_stp")
 
-            Dim Tables As List(Of HtmlElement) = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_stp")
+                If Tables.Count = 1 Then
+                    Throw New Exception("This server's player stats are not tracked.")
+                End If
 
-            If Tables.Count = 1 Then
-                Throw New Exception("This server's player stats are not tracked.")
-            End If
+                Dim FindTable As HtmlElement = Tables.LastOrDefault
 
-            Dim FindTable As HtmlElement = Tables.LastOrDefault
-
-            Return Await GetPlayersFromTable(FindTable)
+                Return Await GetPlayersFromTable(FindTable)
+            Catch ex As Exception
+                Debug.WriteLine(ex.Message)
+                Return Nothing
+            End Try
         End Function
 
-        Public Async Function GetMapPreview_URL() As Task(Of String)
+        Public Async Function GetMapPreview_URL(ByVal InfoUrl_HTML As String) As Task(Of String)
 
-            Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+            '  Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
 
-            If String.IsNullOrEmpty(HtmlCode) Then
+            If String.IsNullOrEmpty(InfoUrl_HTML) Then
                 Throw New Exception("Empty HTML Code.")
             End If
 
-            Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+            Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(InfoUrl_HTML)
 
             If ParsedDocument Is Nothing Then
                 Throw New Exception("Error to Parsing.")

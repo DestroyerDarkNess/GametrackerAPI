@@ -17,15 +17,15 @@
             WebEngine = New Core.WebKit.IE_Hook
         End Sub
 
-        Public Async Function GetServerData() As Task(Of Boolean)
+        Public Async Function GetServerData(ByVal InfoUrl_html As String) As Task(Of Boolean)
             Try
-                Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
+                '  Dim HtmlCode As String = WebEngine.HTMLExternalDownload(InfoUrl)
 
-                If String.IsNullOrEmpty(HtmlCode) Then
+                If String.IsNullOrEmpty(InfoUrl_html) Then
                     Throw New Exception("Empty HTML Code.")
                 End If
 
-                Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+                Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(InfoUrl_html)
 
                 If ParsedDocument Is Nothing Then
                     Throw New Exception("Error to Parsing.")
@@ -75,8 +75,120 @@
             Return Result
         End Function
 
-        Public Async Function GetMaximunPages(ByVal GameUrl As String) As Task(Of Integer)
-            Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl) ' "https://www.gametracker.com/search/halo/?"
+        'Public Async Function Deprecated_GetMaximunPages(ByVal GameUrl As String) As Task(Of Integer)
+        '    Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl) ' "https://www.gametracker.com/search/halo/?"
+
+        '    If String.IsNullOrEmpty(HtmlCode) Then
+        '        Throw New Exception("Empty HTML Code.")
+        '    End If
+
+        '    Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+
+        '    If ParsedDocument Is Nothing Then
+        '        Throw New Exception("Error to Parsing.")
+        '    End If
+
+        '    Dim PagingElement As HtmlElement = ParsedDocument.getElementsByTagAndClassName("div", "paging").FirstOrDefault
+        '    Dim MaxPages As Integer = 0
+        '    Dim Controller As Boolean = False
+
+        '    For Each Element As HtmlElement In PagingElement.Children
+        '        If Controller = True Then
+        '            If Element.InnerText.All(AddressOf Char.IsDigit) Then
+        '                MaxPages = Element.InnerText
+        '            End If
+        '            If MaxPages = 0 Then MaxPages = 1
+        '            Exit For
+        '        End If
+        '        If Element.TagName.ToLower = "span" Then
+        '            If Element.InnerText = "..." Then
+        '                Controller = True
+        '            End If
+        '        End If
+        '    Next
+        '    Return MaxPages
+        'End Function
+
+        'Public Async Function Deprecated_GetServers(ByVal GameUrl As String) As Task(Of List(Of Controllers.Server))
+
+        '    Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl)
+
+        '    If String.IsNullOrEmpty(HtmlCode) Then
+        '        Throw New Exception("Empty HTML Code.")
+        '    End If
+
+        '    Dim ParsedDocument As HtmlDocument = Await WebEngine.GetHtmlDocument(HtmlCode)
+
+        '    If ParsedDocument Is Nothing Then
+        '        Throw New Exception("Error to Parsing.")
+        '    End If
+
+        '    Dim FindTable As HtmlElement = ParsedDocument.getElementsByTagAndClassName("table", "table_lst table_lst_srs").FirstOrDefault
+
+        '    Dim TableString As String = FindTable.Children(0).InnerText
+
+        '    Dim PagingElement As New List(Of HtmlElement)
+
+        '    For Each Element As HtmlElement In FindTable.All
+        '        If Element.TagName.ToLower = "tr" Then
+        '            PagingElement.Add(Element)
+        '        End If
+        '    Next
+
+        '    Dim TableHeaderInfo As HtmlElement = Nothing
+        '    Dim TableInfo As New List(Of HtmlElement)
+
+        '    If Not PagingElement.Count = 0 Then
+
+        '        Dim MaxItems As Integer = PagingElement.Count - 1
+
+        '        For i As Integer = 0 To MaxItems
+
+        '            Select Case i
+        '                Case 0 : TableHeaderInfo = PagingElement(i)
+        '                Case MaxItems
+        '                Case Else
+        '                    TableInfo.Add(PagingElement(i))
+        '            End Select
+
+        '        Next
+
+        '    End If
+
+        '    Dim Result As New List(Of Controllers.Server)
+
+        '    For Each ElementParent As HtmlElement In TableInfo
+
+        '        Dim Server As New Core.Controllers.Server(WebEngine)
+
+        '        Server.Rank = Val(ElementParent.Children(0).InnerText)
+        '        Server.Name = ElementParent.Children(2).InnerText
+
+        '        Dim Players As String() = ElementParent.Children(3).InnerText.Split("/")
+
+        '        Server.Players_Current = Players.FirstOrDefault
+        '        Server.Players_Maximum = Players.LastOrDefault
+
+        '        Dim IPandPort As String() = ElementParent.Children(6).InnerText.Split(":")
+
+        '        Server.IP = IPandPort.FirstOrDefault
+        '        Server.Port = IPandPort.LastOrDefault
+
+        '        Server.Map = ElementParent.Children(7).InnerText
+
+        '        Dim DetailsUrl As String = ElementParent.Children(2).Children(0).GetAttribute("href").Replace("about:/", "")
+
+        '        Server.InfoUrl = BaseURL & DetailsUrl
+
+        '        Result.Add(Server)
+
+        '    Next
+
+        '    Return Result
+        'End Function
+
+        Public Async Function GetMaximunPages(ByVal HtmlCode As String) As Task(Of Integer)
+            'Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl) ' "https://www.gametracker.com/search/halo/?"
 
             If String.IsNullOrEmpty(HtmlCode) Then
                 Throw New Exception("Empty HTML Code.")
@@ -109,9 +221,9 @@
             Return MaxPages
         End Function
 
-        Public Async Function GetServers(ByVal GameUrl As String) As Task(Of List(Of Controllers.Server))
+        Public Async Function GetServers(ByVal HtmlCode As String) As Task(Of List(Of Controllers.Server))
 
-            Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl)
+            'Dim HtmlCode As String = WebEngine.HTMLExternalDownload(GameUrl)
 
             If String.IsNullOrEmpty(HtmlCode) Then
                 Throw New Exception("Empty HTML Code.")
@@ -186,8 +298,6 @@
 
             Return Result
         End Function
-
-
 
     End Class
 End Namespace

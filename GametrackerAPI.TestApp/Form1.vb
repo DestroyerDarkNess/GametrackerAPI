@@ -1,48 +1,100 @@
 ﻿Imports GametrackerAPI.Core.Manage
 Imports GametrackerAPI.Core.Controllers
-
+Imports EO.WebBrowser
 
 Public Class Form1
+
+    Public WebEngineView As EO.WinForm.WebControl '= New EO.WinForm.WebControl With {.WebView = WebEngineHost, .Dock = DockStyle.Fill}
+    Public WithEvents WebEngineHost As EO.WebBrowser.WebView '= New EO.WebBrowser.WebView With {.AllowDropLoad = False, .CustomUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
 
     Private ScraperEngine As Scraper = New Scraper
     Private Servers As New List(Of Server)
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        EO.WebBrowser.Runtime.AddLicense("Kb114+30EO2s3OmxGeCm3MGz8M5nzunz7fGo7vf2HaF3s7P9FOKe5ff2EL112PD9GvZ3s+X1D5+t8PT26KF+xrLUE/Go5Omzy5+v3PYEFO6ntKbC461pmaTA6bto2PD9GvZ3s/MDD+SrwPL3Gp+d2Pj26KFpqbPC3a5rp7XIzZ+v3PYEFO6ntKbC46FotcAEFOan2PgGHeR36d7SGeWawbMKFOervtrI9eBysO3XErx2s7MEFOan2PgGHeR3s7P9FOKe5ff26XXj7fQQ7azcws0X6Jzc8gQQyJ21tMbbtnCttcbcs3Wm8PoO5Kfq6doP")
+        EO.WebEngine.Engine.Default.Options.AllowProprietaryMediaFormats()
+
+        WebEngineHost = New EO.WebBrowser.WebView With {.AllowDropLoad = False, .CustomUserAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36"}
+        WebEngineView = New EO.WinForm.WebControl With {.WebView = WebEngineHost, .Dock = DockStyle.Fill}
+
+        Panel1.Controls.Add(WebEngineView)
+        WebEngineView.SendToBack()
+
+
+
+
         StartRuntimes()
     End Sub
 
     Private Async Sub StartRuntimes()
+        ProgressBar1.Visible = True
 
-        Dim LoadData As Boolean = Await ScraperEngine.GetServerData
+        Dim Navigate As NavigationTask = WebEngineHost.LoadUrl(ScraperEngine.InfoUrl)
 
-        If LoadData = True Then
-            ComboBox1.Items.AddRange(ScraperEngine.Games.Values.ToArray)
-            ComboBox2.Items.AddRange(ScraperEngine.Locations.Values.ToArray)
-            If Not ComboBox1.Items.Count = 0 Then ComboBox1.SelectedIndex = 0
-            If Not ComboBox2.Items.Count = 0 Then ComboBox2.SelectedIndex = 0
-            If Not ComboBox3.Items.Count = 0 Then ComboBox3.SelectedIndex = 0
-        Else
-            MsgBox("No Internet Connection. :(")
-            Environment.Exit(0)
-        End If
+        Navigate.OnDone(Async Sub()
+
+                            If Not Navigate.HttpStatusCode = 200 Then
+                                MsgBox("Error: HttpStatusCode (" & Navigate.HttpStatusCode & ") - Error Code: " & Navigate.ErrorCode)
+                                ProgressBar1.Visible = False
+                                Exit Sub
+                            End If
+
+                            Dim HtmlPage As String = WebEngineHost.GetHtml
+
+                            Dim LoadData As Boolean = Await ScraperEngine.GetServerData(HtmlPage)
+
+                            If LoadData = True Then
+                                ComboBox1.Items.AddRange(ScraperEngine.Games.Values.ToArray)
+                                ComboBox2.Items.AddRange(ScraperEngine.Locations.Values.ToArray)
+                                If Not ComboBox1.Items.Count = 0 Then ComboBox1.SelectedIndex = 0
+                                If Not ComboBox2.Items.Count = 0 Then ComboBox2.SelectedIndex = 0
+                                If Not ComboBox3.Items.Count = 0 Then ComboBox3.SelectedIndex = 0
+
+                                Button1.Enabled = True
+
+                            Else
+                                MsgBox("No Internet Connection. :(")
+                                Environment.Exit(0)
+                            End If
+                            ProgressBar1.Visible = False
+                        End Sub)
+
+
 
     End Sub
 
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
-            Servers.Clear()
-
+            ProgressBar1.Visible = True
             Dim UrlTarget As String = ScraperEngine.MakeSearch(ScraperEngine.Games.Keys(ComboBox1.SelectedIndex), ScraperEngine.Locations.Keys(ComboBox2.SelectedIndex), Val(ComboBox3.Items(ComboBox3.SelectedIndex)))
 
-            ComboBox3.Items.Clear()
-            Dim MaxPages As Integer = Await ScraperEngine.GetMaximunPages(UrlTarget)
-            For i As Integer = 1 To MaxPages
-                ComboBox3.Items.Add(i)
-            Next
+            Dim Navigate As NavigationTask = WebEngineHost.LoadUrl(UrlTarget)
 
-            Servers.AddRange(Await ScraperEngine.GetServers(UrlTarget))
+            Navigate.OnDone(Async Sub()
 
-            ListServers()
+                                If Not Navigate.HttpStatusCode = 200 Then
+                                    MsgBox("Error: HttpStatusCode (" & Navigate.HttpStatusCode & ") - Error Code: " & Navigate.ErrorCode)
+                                    ProgressBar1.Visible = False
+                                    Exit Sub
+                                End If
+
+                                Dim HtmlPage As String = WebEngineHost.GetHtml
+
+                                Servers.Clear()
+
+                                ComboBox3.Items.Clear()
+
+                                Dim MaxPages As Integer = Await ScraperEngine.GetMaximunPages(HtmlPage)
+                                For i As Integer = 1 To MaxPages
+                                    ComboBox3.Items.Add(i)
+                                Next
+
+                                Servers.AddRange(Await ScraperEngine.GetServers(HtmlPage))
+
+                                ListServers()
+                                ProgressBar1.Visible = False
+                            End Sub)
+
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
@@ -77,22 +129,46 @@ Public Class Form1
     End Sub
 
     Private Sub ListPlayers(ByVal ServerEx As Server)
-        Dim PlayerListTask As Task(Of List(Of Player)) = ServerEx.Get_Online_PLAYERS
+        ProgressBar1.Visible = True
+        Dim Navigate As NavigationTask = WebEngineHost.LoadUrl(ServerEx.InfoUrl)
 
-        PlayerListTask.GetAwaiter.OnCompleted(Sub()
-                                                  ListView2.Items.Clear()
-                                                  For Each Py As Player In PlayerListTask.Result
+        Navigate.OnDone(Async Sub()
+                            If Not Navigate.HttpStatusCode = 200 Then
+                                MsgBox("Error: HttpStatusCode (" & Navigate.HttpStatusCode & ") - Error Code: " & Navigate.ErrorCode)
+                                ProgressBar1.Visible = False
+                                Exit Sub
+                            End If
 
-                                                      Dim ListItem As New ListViewItem With {.Name = Py.Rank, .Text = Py.Name}
-                                                      ListItem.SubItems.Add(New ListViewItem.ListViewSubItem With {.Text = Py.Score})
-                                                      ListView2.Items.Add(ListItem)
+                            Dim HtmlPage As String = WebEngineHost.GetHtml
 
-                                                  Next
-                                              End Sub)
+                            Dim PlayerListTask As List(Of Player) = Await ServerEx.Get_Online_PLAYERS(HtmlPage)
+
+                            ListView2.Items.Clear()
+                            If PlayerListTask IsNot Nothing Then
+                                Label4.Visible = False
+                                For Each Py As Player In PlayerListTask
+
+                                    Dim ListItem As New ListViewItem With {.Name = Py.Rank, .Text = Py.Name}
+                                    ListItem.SubItems.Add(New ListViewItem.ListViewSubItem With {.Text = Py.Score})
+                                    ListView2.Items.Add(ListItem)
+
+                                Next
+                            Else
+                                Label4.Visible = True
+                            End If
+                            ProgressBar1.Visible = False
+                        End Sub)
+
+
+
     End Sub
 
     Private Sub CopyAdressToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CopyAdressToolStripMenuItem.Click
         Clipboard.SetText(ListView1.Items(ListView1.SelectedIndex).SubItems(3).Text.ToString)
+    End Sub
+
+    Private Sub WebView1_NewWindow(sender As Object, e As NewWindowEventArgs)
+        e.Accepted = False
     End Sub
 
 End Class
