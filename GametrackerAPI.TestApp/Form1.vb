@@ -1,6 +1,6 @@
-﻿Imports GametrackerAPI.Core.Manage
+﻿Imports EO.WebBrowser
 Imports GametrackerAPI.Core.Controllers
-Imports EO.WebBrowser
+Imports GametrackerAPI.Core.Manage
 
 Public Class Form1
 
@@ -66,7 +66,11 @@ Public Class Form1
     Private Async Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Try
             ProgressBar1.Visible = True
-            Dim UrlTarget As String = ScraperEngine.MakeSearch(ScraperEngine.Games.Keys(ComboBox1.SelectedIndex), ScraperEngine.Locations.Keys(ComboBox2.SelectedIndex), Val(ComboBox3.Items(ComboBox3.SelectedIndex)))
+            Dim GameName As String = ScraperEngine.Games.Keys(ComboBox1.SelectedIndex)
+            Dim LocationID As String = ScraperEngine.Locations.Keys(ComboBox2.SelectedIndex)
+            If Not ComboBox3.Items.Count = 0 AndAlso ComboBox3.SelectedIndex = -1 Then ComboBox3.SelectedIndex = 0
+            Dim PageInt As String = If(ComboBox3.Items.Count = 0, "1", Val(ComboBox3.Items(ComboBox3.SelectedIndex)))
+            Dim UrlTarget As String = ScraperEngine.MakeSearch(GameName, LocationID, PageInt)
 
             Dim Navigate As NavigationTask = WebEngineHost.LoadUrl(UrlTarget)
 
